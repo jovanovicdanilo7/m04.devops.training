@@ -5,9 +5,15 @@ agent:
     type: f1-standard-2
     os_image: ubuntu2204
 blocks:
-  - name: 'Block #1'
+  - name: Job
     task:
       jobs:
         - name: 'Job #1'
           commands:
             - checkout
+            - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            - docker pull ubuntu
+            - docker tag ubuntu $DOCKER_USERNAME/mojubuntic
+            - docker push $DOCKER_USERNAME/mojubuntic
+      secrets:
+        - name: C4
